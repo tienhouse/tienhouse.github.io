@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tiên Case Xinh - Ốp Lưng Điện Thoại Dễ Thương</title>
+  <meta name="description" content="Tiên Case Xinh - Shop ốp lưng điện thoại dễ thương tại Mỹ Luông, An Giang. Hotline & Zalo: 0988 882 700">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>">
+</head>
+<body>
+
+  <!-- Floating Hearts Background -->
+  <div class="floating-hearts" id="floatingHearts"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-top">
+      <a href="#" class="logo" id="logo">
+        <div class="logo-icon">📱</div>
+        <div class="logo-text">
+          <h1>Tiên Case Xinh</h1>
+          <span>✨ Ốp lưng dễ thương ✨</span>
+        </div>
+      </a>
+      <div class="header-contact">
+        <a href="tel:0988882700" id="btn-hotline">📞 0988 882 700</a>
+        <a href="https://zalo.me/0988882700" target="_blank" id="btn-zalo-header">💬 Zalo</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-link active" id="nav-home">🏠 Trang Chủ</a>
+      <a href="#new-arrivals" class="nav-link" id="nav-new">🆕 Hàng Mới <span class="badge">NEW</span></a>
+      <a href="#contact" class="nav-link" id="nav-contact">📍 Liên Hệ</a>
+    </div>
+  </nav>
+
+  <!-- Hero Banner -->
+  <section class="hero">
+    <div class="hero-card">
+      <h2>🌸 Tiên Case Xinh 🌸</h2>
+      <p>Chuyên ốp lưng điện thoại xinh xắn, chất lượng cao, giá yêu thương tại Mỹ Luông, An Giang 💕</p>
+      <div class="hero-features">
+        <div class="hero-feat">🎀 Mẫu mới liên tục</div>
+        <div class="hero-feat">💝 Giá siêu yêu</div>
+        <div class="hero-feat">🚀 Ship nhanh</div>
+        <div class="hero-feat">💎 Chất lượng cao</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- New Arrivals Section -->
+  <section class="products-section" id="new-arrivals">
+    <div class="section-title">
+      <h2>Hàng Mới Về</h2>
+      <p>Những mẫu ốp lưng mới nhất, xinh nhất dành cho bạn 💖</p>
+    </div>
+    <div class="products-grid" id="productsGrid">
+      <!-- Products rendered by JS -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h3>🌸 Tiên Case Xinh</h3>
+        <p>Chuyên cung cấp ốp lưng điện thoại xinh xắn, chất lượng với giá cả phải chăng. Mỗi chiếc ốp là một câu chuyện dễ thương! 💕</p>
+      </div>
+      <div class="footer-col">
+        <h3>📍 Liên Hệ</h3>
+        <div class="contact-item">📍 Mỹ Luông, An Giang</div>
+        <div class="contact-item">📞 <a href="tel:0988882700">0988 882 700</a></div>
+        <div class="contact-item">💬 <a href="https://zalo.me/0988882700" target="_blank">Zalo: 0988 882 700</a></div>
+      </div>
+      <div class="footer-col">
+        <h3>💝 Chính Sách</h3>
+        <p><a href="#">✨ Hàng chính hãng 100%</a></p>
+        <p><a href="#">🔄 Đổi trả trong 7 ngày</a></p>
+        <p><a href="#">🚚 Giao hàng toàn quốc</a></p>
+        <p><a href="#">💰 Thanh toán khi nhận hàng</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Tiên Case Xinh. Made with 💖 tại Mỹ Luông, An Giang
+    </div>
+  </footer>
+
+  <!-- Zalo Float Button -->
+  <div class="zalo-float">
+    <a href="https://zalo.me/0988882700" target="_blank" id="btn-zalo-float">💬 Chat Zalo</a>
+  </div>
+
+  <!-- Scroll to Top -->
+  <button class="scroll-top" id="scrollTop">↑</button>
+
+  <!-- Product Detail Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="productModal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <h3 id="modalTitle">Chi tiết sản phẩm</h3>
+      <div class="modal-product">
+        <div class="modal-img" id="modalImg">📱</div>
+        <div class="modal-info">
+          <h4 id="modalName"></h4>
+          <p class="price" id="modalPrice"></p>
+        </div>
+      </div>
+      <div class="modal-contact-info">
+        <p>📍 Địa chỉ: <strong>Mỹ Luông, An Giang</strong></p>
+        <p>📞 Liên hệ đặt hàng: <a href="tel:0988882700">0988 882 700</a></p>
+        <p>💬 Nhắn Zalo để được tư vấn nhanh nhất!</p>
+      </div>
+      <div class="modal-btn-group">
+        <a href="https://zalo.me/0988882700" target="_blank" class="btn-primary">💬 Nhắn Zalo Ngay</a>
+        <a href="tel:0988882700" class="btn-secondary">📞 Gọi Điện</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
