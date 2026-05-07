@@ -301,6 +301,13 @@ body {
   width: 100%; height: 100%; object-fit: cover;
   transition: transform 0.5s;
 }
+.out-of-stock-overlay {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(255,255,255,0.7); display: flex;
+  align-items: center; justify-content: center;
+  font-size: 1.2rem; font-weight: 700; color: #ff4757;
+  z-index: 2;
+}
 .product-card:hover .product-img img {
   transform: scale(1.05);
 }
@@ -330,6 +337,11 @@ body {
   font-size: 0.85rem; color: var(--gray-600);
   text-decoration: line-through;
 }
+.product-stats {
+  display: flex; justify-content: space-between;
+  font-size: 0.8rem; color: var(--gray-500); margin-bottom: 12px;
+}
+.stat-stock { color: var(--primary-600); font-weight: 600; }
 .product-actions {
   display: flex; gap: 8px; margin-top: auto;
 }
@@ -706,6 +718,11 @@ body {
 .btn-send-comment { background: var(--primary-500); color: white; border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
 .btn-send-comment:hover { background: var(--primary-600); transform: scale(1.05); }
 .no-comments { text-align: center; color: var(--gray-600); font-size: 0.85rem; padding: 15px 0; opacity: 0.7; }
+
+.btn-disabled {
+  background: var(--gray-200) !important; color: var(--gray-500) !important;
+  cursor: not-allowed !important;
+}
 
 /* ===== CHECKOUT MODAL ===== */
 .modal-checkout { max-width: 520px; max-height: 90vh; overflow-y: auto; padding: 25px; }

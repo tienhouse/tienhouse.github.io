@@ -3,17 +3,19 @@
 // =========================================================
 // Hướng dẫn quản lý sản phẩm bằng Google Sheet:
 // 1. Tạo Google Sheet với các tên cột đúng như sau ở Dòng 1:
-//    id | name | code | priceNum | oldPrice | img | category | requiresModel | description
+//    id | name | code | priceNum | oldPrice | img | category | requiresModel | description | stock | sold
 // 2. Ý nghĩa các cột:
 //    - id: Số thứ tự (1, 2, 3...)
 //    - name: Tên sản phẩm
-//    - code: Mã sản phẩm (VD: OP.01)
+//    - code: Mã sản phẩm (VD: OL.01, MK.01)
 //    - priceNum: Giá bán (chỉ nhập số, VD: 89000)
 //    - oldPrice: Giá cũ để gạch ngang (VD: 120.000₫) - Để trống nếu không sale
 //    - img: Link ảnh sản phẩm (nhiều ảnh cách nhau bằng dấu phẩy)
-//    - category: Điền "new", "keychain", "souvenir"
+//    - category: Điền "Mới", "Ốp Lưng", "Móc Khoá", "Quà Lưu Niệm"
 //    - requiresModel: TRUE nếu bắt buộc chọn dòng máy, FALSE nếu không
-//    - description: Mô tả sản phẩm (VD: Nhựa dẻo ôm sát, hottrend tiktok)
+//    - description: Mô tả sản phẩm
+//    - stock: Tổng số lượng sản phẩm (VD: 100)
+//    - sold: Số lượng đã bán (VD: 20) -> Số còn lại = stock - sold
 // 3. Chọn Tệp -> Chia sẻ -> Công bố lên web -> CSV -> Copy Link dán vào dưới:
 
 const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRPIWIkBG6CUr-DtynitymDAlgFKThimrMHIK5rTpakdq0Gi7xz8zMuNBarecNSJ8FDq7AGkRHk9NGE/pub?output=csv"; 
@@ -22,21 +24,10 @@ const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR
 // DỮ LIỆU MẪU
 // =========================================================
 const sampleProducts = [
-  { id: 1, name: "Ốp Lưng IPhone Đính Nơ Xinh", code: "OP.01", price: "89.000₫", priceNum: 89000, oldPrice: "120.000₫", sale: true, img: "product_image.jpg", category: "new", requiresModel: true, description: "Ốp lưng xịn xò hottrend tiktok. Nhựa dẻo ôm sát, bảo vệ máy cực tốt. Đính nơ xinh xắn, nổi bật phong cách!" },
-  { id: 2, name: "Ốp IPhone Tráng Gương", code: "OP.02", price: "95.000₫", priceNum: 95000, oldPrice: "150.000₫", sale: true, img: "product_image.jpg", category: "new", requiresModel: true, description: "Ốp tráng gương sang chảnh, chất liệu cao cấp. Chống trầy xước, dễ vệ sinh. Hot trend TikTok!" },
-  { id: 3, name: "Ốp Viền Xi Màu Pastel", code: "OP.03", price: "79.000₫", priceNum: 79000, oldPrice: "", sale: false, img: "product_image.jpg", category: "new", requiresModel: true, description: "Viền xi bóng màu pastel dịu dàng. Nhựa TPU mềm dẻo, ôm sát máy. Đẹp từng chi tiết!" },
-  { id: 4, name: "Ốp Lưng Hình Thú 3D", code: "OP.04", price: "105.000₫", priceNum: 105000, oldPrice: "", sale: false, img: "product_image.jpg", category: "new", requiresModel: true, description: "Ốp hình thú 3D siêu cute. Silicon mềm chống sốc tốt. Cầm êm tay, không trơn trượt!" },
-  { id: 5, name: "Ốp Chống Sốc Trong Suốt", code: "OP.05", price: "69.000₫", priceNum: 69000, oldPrice: "99.000₫", sale: true, img: "product_image.jpg", category: "new", requiresModel: true, description: "Ốp trong suốt chống sốc 4 góc. Chất liệu PC+TPU cao cấp, không ố vàng. Bảo vệ máy tối đa!" },
-  { id: 6, name: "Móc Khoá Capybara Bóp Kêu", code: "MK.01", price: "35.000₫", priceNum: 35000, oldPrice: "50.000₫", sale: true, img: "product_image.jpg", category: "keychain", requiresModel: false, description: "Móc khoá Capybara bóp kêu cute xỉu. Chất liệu silicon an toàn. Hot trend TikTok 2024!" },
-  { id: 7, name: "Móc Khoá Gấu Dâu Lotso", code: "MK.02", price: "45.000₫", priceNum: 45000, oldPrice: "", sale: false, img: "product_image.jpg", category: "keychain", requiresModel: false, description: "Gấu Dâu Lotso hồng xinh. Lông mịn mượt, size mini dễ thương. Treo balo, túi xách cực đẹp!" },
-  { id: 8, name: "Móc Khoá Labubu Hot Trend", code: "MK.03", price: "85.000₫", priceNum: 85000, oldPrice: "", sale: false, img: "product_image.jpg", category: "keychain", requiresModel: false, description: "Labubu phiên bản mini móc khoá. Hot trend không thể bỏ lỡ. Sưu tập đủ bộ nhé!" },
-  { id: 9, name: "Móc Khoá Loopy Cute", code: "MK.04", price: "40.000₫", priceNum: 40000, oldPrice: "60.000₫", sale: true, img: "product_image.jpg", category: "keychain", requiresModel: false, description: "Loopy hồng cute đáng yêu. Silicon dẻo bền đẹp. Làm quà tặng cực ý nghĩa!" },
-  { id: 10, name: "Móc Khoá Len Handmade", code: "MK.05", price: "55.000₫", priceNum: 55000, oldPrice: "", sale: false, img: "product_image.jpg", category: "keychain", requiresModel: false, description: "Handmade len đan tay tỉ mỉ. Mỗi sản phẩm là duy nhất. Món quà ý nghĩa cho người thương!" },
-  { id: 11, name: "Quả Cầu Tuyết Tình Yêu", code: "QLN.01", price: "120.000₫", priceNum: 120000, oldPrice: "150.000₫", sale: true, img: "product_image.jpg", category: "souvenir", requiresModel: false, description: "Quả cầu tuyết lung linh đẹp mắt. Có đèn LED đổi màu. Quà tặng lãng mạn!" },
-  { id: 12, name: "Hộp Nhạc Gỗ Vintage", code: "QLN.02", price: "185.000₫", priceNum: 185000, oldPrice: "", sale: false, img: "product_image.jpg", category: "souvenir", requiresModel: false, description: "Hộp nhạc gỗ phong cách vintage. Giai điệu nhẹ nhàng, thiết kế tinh xảo. Decor cực đẹp!" },
-  { id: 13, name: "Gấu Bông Mini Thỏ Trắng", code: "QLN.03", price: "99.000₫", priceNum: 99000, oldPrice: "130.000₫", sale: true, img: "product_image.jpg", category: "souvenir", requiresModel: false, description: "Thỏ trắng bông mịn siêu mềm. Size mini cầm vừa tay. Quà tặng đáng yêu cho bạn gái!" },
-  { id: 14, name: "Lọ Đựng Sao May Mắn", code: "QLN.04", price: "45.000₫", priceNum: 45000, oldPrice: "", sale: false, img: "product_image.jpg", category: "souvenir", requiresModel: false, description: "Lọ sao may mắn nhiều màu sắc. Tự gấp sao gửi gắm yêu thương. Món quà handmade ý nghĩa!" },
-  { id: 15, name: "Khung Ảnh Để Bàn Mini", code: "QLN.05", price: "75.000₫", priceNum: 75000, oldPrice: "", sale: false, img: "product_image.jpg", category: "souvenir", requiresModel: false, description: "Khung ảnh mini để bàn xinh xắn. Chất liệu acrylic trong suốt. Lưu giữ khoảnh khắc đẹp!" }
+  { id: 1, name: "Ốp Lưng IPhone Đính Nơ Xinh", code: "OL.01", price: "89.000₫", priceNum: 89000, oldPrice: "120.000₫", sale: true, img: "product_image.jpg", category: "Mới", requiresModel: true, description: "Ốp lưng xịn xò hottrend tiktok. Nhựa dẻo ôm sát, bảo vệ máy cực tốt.", stock: 100, sold: 15 },
+  { id: 2, name: "Ốp IPhone Tráng Gương", code: "OL.02", price: "95.000₫", priceNum: 95000, oldPrice: "150.000₫", sale: true, img: "product_image.jpg", category: "Ốp Lưng", requiresModel: true, description: "Ốp tráng gương sang chảnh, chất liệu cao cấp.", stock: 50, sold: 50 },
+  { id: 3, name: "Móc Khoá Capybara Bóp Kêu", code: "MK.01", price: "35.000₫", priceNum: 35000, oldPrice: "50.000₫", sale: true, img: "product_image.jpg", category: "Móc Khoá", requiresModel: false, description: "Móc khoá Capybara bóp kêu cute xỉu.", stock: 200, sold: 45 },
+  { id: 4, name: "Quả Cầu Tuyết Tình Yêu", code: "QLN.01", price: "120.000₫", priceNum: 120000, oldPrice: "150.000₫", sale: true, img: "product_image.jpg", category: "Quà Lưu Niệm", requiresModel: false, description: "Quả cầu tuyết lung linh đẹp mắt. Có đèn LED đổi màu.", stock: 20, sold: 5 }
 ];
 
 let products = [];
@@ -68,13 +59,24 @@ async function initApp() {
               let imgs = [];
               if (row.img) imgs = row.img.split(',').map(url => url.trim()).filter(url => url);
               if (imgs.length === 0) imgs = ["product_image.jpg"];
+              const totalStock = parseInt(row.stock) || 0;
+              const sold = parseInt(row.sold) || 0;
+
               return {
-                id: parseInt(row.id), name: row.name, code: row.code,
-                priceNum: priceNum, price: formatCurrency(priceNum),
-                oldPrice: row.oldPrice || "", sale: !!row.oldPrice,
-                img: imgs[0], images: imgs, category: row.category,
-                requiresModel: row.requiresModel && row.requiresModel.toUpperCase() === 'TRUE',
-                description: row.description || "Sản phẩm chất lượng cao từ Tiên House."
+                id: parseInt(row.id),
+                name: row.name || "Sản phẩm không tên",
+                code: row.code || `SP.${row.id}`,
+                price: priceNum.toLocaleString('vi-VN') + "₫",
+                priceNum: priceNum,
+                oldPrice: row.oldPrice ? row.oldPrice.trim() : "",
+                sale: row.oldPrice ? true : false,
+                img: imgs[0],
+                images: imgs,
+                category: row.category ? row.category.trim() : "Mới",
+                requiresModel: String(row.requiresModel).toUpperCase() === 'TRUE',
+                description: row.description || "Đang cập nhật mô tả...",
+                stock: totalStock,
+                sold: sold
               };
             });
             resolve();
@@ -96,13 +98,17 @@ async function initApp() {
 }
 
 function generateProductHTML(p) {
+  const remaining = p.stock - p.sold;
+  const isOutOfStock = remaining <= 0;
+  
   return `
     <div class="product-card" onclick="openProductModal(${p.id})">
-      ${p.category === 'new' ? '<span class="tag-new">MỚI ✨</span>' : ''}
+      ${p.category === 'Mới' ? '<span class="tag-new">MỚI ✨</span>' : ''}
       ${p.sale ? '<span class="tag-sale">SALE 🔥</span>' : ''}
       <div class="product-img">
         <div class="product-like-badge card-like-${p.id}" style="display:none;"><i class="fa-solid fa-heart"></i> <span>0</span></div>
         <img src="${p.img}" alt="${p.name}" loading="lazy">
+        ${isOutOfStock ? '<div class="out-of-stock-overlay">HẾT HÀNG</div>' : ''}
       </div>
       <div class="product-info">
         <h3>${p.code} - ${p.name}</h3>
@@ -110,9 +116,13 @@ function generateProductHTML(p) {
           <span class="price-current">${p.price}</span>
           ${p.oldPrice ? `<span class="price-old">${p.oldPrice}</span>` : ''}
         </div>
+        <div class="product-stats">
+          <span class="stat-sold">Đã bán ${p.sold}</span>
+          <span class="stat-stock">${isOutOfStock ? 'Hết hàng' : `Còn ${remaining}`}</span>
+        </div>
         <div class="product-actions">
-          <button class="btn-cart" onclick="event.stopPropagation(); openProductModal(${p.id})">
-            <i class="fa-solid fa-cart-plus"></i> Chọn Mua
+          <button class="btn-cart ${isOutOfStock ? 'btn-disabled' : ''}" onclick="event.stopPropagation(); ${isOutOfStock ? '' : `openProductModal(${p.id})`}">
+            <i class="fa-solid fa-cart-plus"></i> ${isOutOfStock ? 'Hết hàng' : 'Chọn Mua'}
           </button>
         </div>
       </div>
@@ -121,13 +131,26 @@ function generateProductHTML(p) {
 }
 
 function renderAllProducts(productList) {
-  const cats = { new: 'grid-new', keychain: 'grid-keychain', souvenir: 'grid-souvenir' };
-  const sections = { new: 'section-new', keychain: 'section-keychain', souvenir: 'section-souvenir' };
+  const cats = { 
+    'Mới': 'grid-new', 
+    'Ốp Lưng': 'grid-case', 
+    'Móc Khoá': 'grid-keychain', 
+    'Quà Lưu Niệm': 'grid-souvenir' 
+  };
+  const sections = { 
+    'Mới': 'section-new', 
+    'Ốp Lưng': 'section-case', 
+    'Móc Khoá': 'section-keychain', 
+    'Quà Lưu Niệm': 'section-souvenir' 
+  };
+  
   for (const [cat, gridId] of Object.entries(cats)) {
     const items = productList.filter(p => p.category === cat);
     const grid = document.getElementById(gridId);
     if (grid) grid.innerHTML = items.map(generateProductHTML).join('');
-    document.getElementById(sections[cat]).style.display = items.length > 0 ? 'block' : 'none';
+    
+    const section = document.getElementById(sections[cat]);
+    if (section) section.style.display = items.length > 0 ? 'block' : 'none';
   }
   document.getElementById('no-results').style.display = productList.length === 0 ? 'block' : 'none';
   listenToCardLikes(productList);
@@ -147,8 +170,41 @@ function openProductModal(id) {
   galleryIndex = 0;
 
   document.getElementById('modalName').textContent = `${currentSelectedProduct.code} - ${currentSelectedProduct.name}`;
-  document.getElementById('modalPrice').textContent = currentSelectedProduct.price;
-  document.getElementById('modalDescText').textContent = currentSelectedProduct.description || "Sản phẩm chất lượng cao từ Tiên House.";
+  
+  const remaining = currentSelectedProduct.stock - currentSelectedProduct.sold;
+  const isOutOfStock = remaining <= 0;
+  
+  let priceHtml = `<span class="price-current">${currentSelectedProduct.price}</span>`;
+  if (currentSelectedProduct.oldPrice) {
+    priceHtml += ` <span class="price-old">${currentSelectedProduct.oldPrice}</span>`;
+  }
+  document.getElementById('modalPrice').innerHTML = priceHtml;
+  
+  const stockHtml = `
+    <div style="font-size: 0.95rem; margin-top: 8px; color: var(--gray-600);">
+      🔥 Đã bán: <b>${currentSelectedProduct.sold}</b> | 📦 Kho: <b style="color: ${isOutOfStock ? 'red' : 'var(--primary-600)'}">${isOutOfStock ? 'HẾT HÀNG' : 'Còn ' + remaining}</b>
+    </div>
+  `;
+  document.getElementById('modalPrice').innerHTML += stockHtml;
+
+  document.getElementById('modalDescText').textContent = currentSelectedProduct.description;
+  
+  const btnAddToCart = document.getElementById('btnAddToCart');
+  const btnBuyNow = document.getElementById('btnBuyNow');
+  
+  if (isOutOfStock) {
+    btnAddToCart.disabled = true;
+    btnAddToCart.style.opacity = '0.5';
+    btnAddToCart.innerHTML = '<i class="fa-solid fa-ban"></i> Đã Hết Hàng';
+    btnBuyNow.disabled = true;
+    btnBuyNow.style.opacity = '0.5';
+  } else {
+    btnAddToCart.disabled = false;
+    btnAddToCart.style.opacity = '1';
+    btnAddToCart.innerHTML = '<i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ hàng';
+    btnBuyNow.disabled = false;
+    btnBuyNow.style.opacity = '1';
+  }
 
   const images = currentSelectedProduct.images || [currentSelectedProduct.img];
   const slidesEl = document.getElementById('gallerySlides');
