@@ -526,7 +526,13 @@ function handleGoogleLogin() {
 }
 
 function handleCredentialResponse(response) {
-  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+  const base64Url = response.credential.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+  
+  const payload = JSON.parse(jsonPayload);
   currentUser = { name: payload.name, email: payload.email, picture: payload.picture, sub: payload.sub };
   localStorage.setItem('tienhouse_user', JSON.stringify(currentUser));
   updateLoginUI();
