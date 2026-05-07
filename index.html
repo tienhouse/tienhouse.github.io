@@ -3,12 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tiên Case Xinh - Ốp Lưng Điện Thoại Dễ Thương</title>
-  <meta name="description" content="Tiên Case Xinh - Shop ốp lưng điện thoại dễ thương tại Mỹ Luông, An Giang. Hotline & Zalo: 0988 882 700">
+  <title>Tiên House - Phụ Kiện Xinh & Sửa Chữa Điện Thoại</title>
+  <meta name="description" content="Tiên House - Chuyên phụ kiện xinh, case, ép kính và sửa chữa điện thoại. Đẹp máy - Bền máy - Tiện lợi mỗi ngày. Chợ Mỹ Luông, An Giang.">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>">
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" href="logo.jpg">
 </head>
 <body>
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
 
   <!-- Floating Hearts Background -->
   <div class="floating-hearts" id="floatingHearts"></div>
@@ -17,50 +22,121 @@
   <header class="header">
     <div class="header-top">
       <a href="#" class="logo" id="logo">
-        <div class="logo-icon">📱</div>
+        <img src="logo.jpg" alt="Tiên House Logo" class="logo-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📱</text></svg>'">
         <div class="logo-text">
-          <h1>Tiên Case Xinh</h1>
-          <span>✨ Ốp lưng dễ thương ✨</span>
+          <h1>Tiên House</h1>
+          <span>✨ Phụ kiện xinh - Ép kính - Sửa chữa ✨</span>
         </div>
       </a>
       <div class="header-contact">
-        <a href="tel:0988882700" id="btn-hotline">📞 0988 882 700</a>
-        <a href="https://zalo.me/0988882700" target="_blank" id="btn-zalo-header">💬 Zalo</a>
+        <a href="tel:0378791667" id="btn-hotline"><i class="fa-solid fa-phone"></i> 0378 791 667</a>
+        <a href="https://zalo.me/0378791667" target="_blank" id="btn-zalo-header"><i class="fa-solid fa-comment-dots"></i> Zalo</a>
+        <button class="cart-btn-header" id="headerCartBtn">
+          <i class="fa-solid fa-shopping-cart"></i> Giỏ hàng <span class="cart-count badge" id="headerCartCount">0</span>
+        </button>
+        <button class="google-login-btn" id="googleLoginBtn" onclick="handleGoogleLogin()">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G" width="18"> Đăng nhập
+        </button>
+        <div class="user-avatar-wrapper" id="userAvatarWrapper" style="display:none;">
+          <img id="userAvatar" class="user-avatar" src="" alt="avatar">
+          <span id="userDisplayName" class="user-name-header"></span>
+          <button class="btn-logout" id="btnLogout" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- Navigation -->
+  <!-- Navigation & Search -->
   <nav class="nav">
     <div class="nav-inner">
-      <a href="#" class="nav-link active" id="nav-home">🏠 Trang Chủ</a>
-      <a href="#new-arrivals" class="nav-link" id="nav-new">🆕 Hàng Mới <span class="badge">NEW</span></a>
-      <a href="#contact" class="nav-link" id="nav-contact">📍 Liên Hệ</a>
+      <div class="nav-links">
+        <a href="#" class="nav-link active" id="nav-home">🏠 Trang Chủ</a>
+        <a href="#section-new" class="nav-link">🆕 Sản Phẩm Mới</a>
+        <a href="#section-keychain" class="nav-link">🔑 Móc Khoá Trend</a>
+        <a href="#section-souvenir" class="nav-link">🎁 Quà Lưu Niệm</a>
+        <a href="#section-map" class="nav-link">📍 Bản Đồ</a>
+      </div>
+      
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm sản phẩm...">
+        <button class="search-btn" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
     </div>
   </nav>
 
   <!-- Hero Banner -->
   <section class="hero">
     <div class="hero-card">
-      <h2>🌸 Tiên Case Xinh 🌸</h2>
-      <p>Chuyên ốp lưng điện thoại xinh xắn, chất lượng cao, giá yêu thương tại Mỹ Luông, An Giang 💕</p>
+      <div class="hero-banner-img">
+        <img src="banner.png" alt="Tiên House Banner" onerror="this.style.display='none'">
+      </div>
+      <h2>✨ Tiên House ✨</h2>
+      <p>Chuyên phụ kiện, case cao cấp, dịch vụ ép kính & sửa chữa điện thoại chuyên nghiệp tại Chợ Mỹ Luông, An Giang ✨</p>
       <div class="hero-features">
-        <div class="hero-feat">🎀 Mẫu mới liên tục</div>
-        <div class="hero-feat">💝 Giá siêu yêu</div>
-        <div class="hero-feat">🚀 Ship nhanh</div>
-        <div class="hero-feat">💎 Chất lượng cao</div>
+        <div class="hero-feat"><i class="fa-solid fa-mobile-screen"></i> Phụ Kiện Xinh</div>
+        <div class="hero-feat"><i class="fa-solid fa-shield-cat"></i> Case Đẹp</div>
+        <div class="hero-feat"><i class="fa-solid fa-hammer"></i> Ép Kính</div>
+        <div class="hero-feat"><i class="fa-solid fa-screwdriver-wrench"></i> Sửa Chữa</div>
+      </div>
+      <div class="hero-social">
+        <a href="https://www.facebook.com/profile.php?id=1062931456907313" target="_blank" class="social-link fb"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
+        <a href="https://www.tiktok.com/@tienhouse67" target="_blank" class="social-link tiktok"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+        <a href="https://zalo.me/0378791667" target="_blank" class="social-link zalo-link"><i class="fa-solid fa-comment-dots"></i> Zalo</a>
       </div>
     </div>
   </section>
 
-  <!-- New Arrivals Section -->
-  <section class="products-section" id="new-arrivals">
+  <!-- No Results Message -->
+  <div id="no-results" style="display:none; text-align:center; padding: 50px 20px; font-size: 1.1rem; color: var(--gray-600); position: relative; z-index: 1;">
+    <i class="fa-solid fa-box-open" style="font-size:3rem; margin-bottom:15px; color: var(--primary-300);"></i><br>
+    Không tìm thấy sản phẩm nào phù hợp với từ khóa của bạn.
+  </div>
+
+  <!-- Sản Phẩm Mới Section -->
+  <section class="products-section" id="section-new">
     <div class="section-title">
-      <h2>Hàng Mới Về</h2>
-      <p>Những mẫu ốp lưng mới nhất, xinh nhất dành cho bạn 💖</p>
+      <h2>Sản Phẩm Mới</h2>
+      <p>Những mẫu phụ kiện và ốp lưng cao cấp, tinh tế dành cho bạn ✨</p>
     </div>
-    <div class="products-grid" id="productsGrid">
+    <div class="products-grid" id="grid-new">
       <!-- Products rendered by JS -->
+    </div>
+  </section>
+
+  <!-- Móc Khoá Trend Section -->
+  <section class="products-section" id="section-keychain">
+    <div class="section-title">
+      <h2>Móc Khoá Trend</h2>
+      <p>Cập nhật những mẫu móc khoá xinh xắn, cực hot trên Tóp Tóp 🔥</p>
+    </div>
+    <div class="products-grid" id="grid-keychain">
+      <!-- Products rendered by JS -->
+    </div>
+  </section>
+
+  <!-- Quà Lưu Niệm Section -->
+  <section class="products-section" id="section-souvenir">
+    <div class="section-title">
+      <h2>Quà Lưu Niệm</h2>
+      <p>Những món quà nhỏ nhắn, ý nghĩa dành tặng người thương 🎁</p>
+    </div>
+    <div class="products-grid" id="grid-souvenir">
+      <!-- Products rendered by JS -->
+    </div>
+  </section>
+
+  <!-- Google Maps Section -->
+  <section class="map-section" id="section-map">
+    <div class="section-title">
+      <h2>📍 Vị Trí Cửa Hàng</h2>
+      <p>Tiên House - Chợ Mỹ Luông, An Giang</p>
+    </div>
+    <div class="map-container">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.123456789!2d105.5272!3d10.3897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310a0e!2zQ2jhu6MgTeG7uSBMdcO0bmcsIEFuIEdpYW5n!5e0!3m2!1svi!2svn!4v1" 
+        width="100%" height="400" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
     </div>
   </section>
 
@@ -68,60 +144,236 @@
   <footer class="footer" id="contact">
     <div class="footer-inner">
       <div class="footer-col">
-        <h3>🌸 Tiên Case Xinh</h3>
-        <p>Chuyên cung cấp ốp lưng điện thoại xinh xắn, chất lượng với giá cả phải chăng. Mỗi chiếc ốp là một câu chuyện dễ thương! 💕</p>
+        <h3>✨ Tiên House</h3>
+        <p>Đẹp máy - Bền máy - Tiện lợi mỗi ngày. Chuyên cung cấp phụ kiện, case, dịch vụ ép kính và sửa chữa điện thoại tận tâm.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/profile.php?id=1062931456907313" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@tienhouse67" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://zalo.me/0378791667" target="_blank" title="Zalo"><i class="fa-solid fa-comment-dots"></i></a>
+        </div>
       </div>
       <div class="footer-col">
         <h3>📍 Liên Hệ</h3>
-        <div class="contact-item">📍 Mỹ Luông, An Giang</div>
-        <div class="contact-item">📞 <a href="tel:0988882700">0988 882 700</a></div>
-        <div class="contact-item">💬 <a href="https://zalo.me/0988882700" target="_blank">Zalo: 0988 882 700</a></div>
+        <div class="contact-item"><i class="fa-solid fa-location-dot"></i> Chợ Mỹ Luông, An Giang</div>
+        <div class="contact-item"><i class="fa-solid fa-phone"></i> <a href="tel:0378791667">0378 791 667</a></div>
+        <div class="contact-item"><i class="fa-solid fa-comment-dots"></i> <a href="https://zalo.me/0378791667" target="_blank">Zalo: 0378 791 667</a></div>
       </div>
       <div class="footer-col">
-        <h3>💝 Chính Sách</h3>
-        <p><a href="#">✨ Hàng chính hãng 100%</a></p>
-        <p><a href="#">🔄 Đổi trả trong 7 ngày</a></p>
-        <p><a href="#">🚚 Giao hàng toàn quốc</a></p>
-        <p><a href="#">💰 Thanh toán khi nhận hàng</a></p>
+        <h3>💝 Dịch Vụ</h3>
+        <p><a href="#">✨ Phụ kiện điện thoại</a></p>
+        <p><a href="#">🔄 Ép kính chuyên nghiệp</a></p>
+        <p><a href="#">🚚 Sửa chữa phần cứng</a></p>
+        <p><a href="#">💰 Tư vấn & Báo giá</a></p>
       </div>
     </div>
     <div class="footer-bottom">
-      © 2026 Tiên Case Xinh. Made with 💖 tại Mỹ Luông, An Giang
+      © 2026 Tiên House. Made with 💖 tại Chợ Mỹ Luông, An Giang
     </div>
   </footer>
 
-  <!-- Zalo Float Button -->
-  <div class="zalo-float">
-    <a href="https://zalo.me/0988882700" target="_blank" id="btn-zalo-float">💬 Chat Zalo</a>
+  <!-- Zalo & Cart Float Buttons -->
+  <div class="floating-actions">
+    <button class="cart-float" id="floatCartBtn">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span class="cart-count" id="floatCartCount">0</span>
+    </button>
+    <a href="https://zalo.me/0378791667" target="_blank" class="zalo-float">💬 Chat Zalo</a>
   </div>
 
   <!-- Scroll to Top -->
-  <button class="scroll-top" id="scrollTop">↑</button>
+  <button class="scroll-top" id="scrollTop"><i class="fa-solid fa-arrow-up"></i></button>
 
-  <!-- Product Detail Modal -->
+  <!-- Product Detail Modal (Enhanced) -->
   <div class="modal-overlay" id="modalOverlay">
-    <div class="modal" id="productModal">
+    <div class="modal modal-product-detail" id="productModal">
       <button class="modal-close" id="modalClose">✕</button>
-      <h3 id="modalTitle">Chi tiết sản phẩm</h3>
-      <div class="modal-product">
-        <div class="modal-img" id="modalImg">📱</div>
-        <div class="modal-info">
-          <h4 id="modalName"></h4>
-          <p class="price" id="modalPrice"></p>
+      
+      <!-- Swipeable Image Gallery -->
+      <div class="gallery-swipe-container" id="gallerySwipeContainer">
+        <div class="gallery-slides" id="gallerySlides"></div>
+        <button class="gallery-nav gallery-prev" id="galleryPrev"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="gallery-nav gallery-next" id="galleryNext"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="gallery-dots" id="galleryDots"></div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="modal-product-info">
+        <h3 id="modalName"></h3>
+        <p class="price" id="modalPrice"></p>
+      </div>
+
+      <!-- Product Description -->
+      <div class="modal-description" id="modalDescription">
+        <h4>📋 Thông tin sản phẩm</h4>
+        <p id="modalDescText"></p>
+      </div>
+      
+      <!-- Model Select -->
+      <div class="form-group" id="modelSelectGroup">
+        <label for="phoneModelSelect">📱 Chọn dòng máy của bạn:</label>
+        <select id="phoneModelSelect" class="form-control">
+          <option value="">-- Vui lòng chọn dòng máy --</option>
+          <option value="iPhone 11">iPhone 11</option>
+          <option value="iPhone 11 Pro">iPhone 11 Pro</option>
+          <option value="iPhone 11 Pro Max">iPhone 11 Pro Max</option>
+          <option value="iPhone 12">iPhone 12</option>
+          <option value="iPhone 12 Pro">iPhone 12 Pro</option>
+          <option value="iPhone 12 Pro Max">iPhone 12 Pro Max</option>
+          <option value="iPhone 13">iPhone 13</option>
+          <option value="iPhone 13 Pro">iPhone 13 Pro</option>
+          <option value="iPhone 13 Pro Max">iPhone 13 Pro Max</option>
+          <option value="iPhone 14">iPhone 14</option>
+          <option value="iPhone 14 Plus">iPhone 14 Plus</option>
+          <option value="iPhone 14 Pro">iPhone 14 Pro</option>
+          <option value="iPhone 14 Pro Max">iPhone 14 Pro Max</option>
+          <option value="iPhone 15">iPhone 15</option>
+          <option value="iPhone 15 Plus">iPhone 15 Plus</option>
+          <option value="iPhone 15 Pro">iPhone 15 Pro</option>
+          <option value="iPhone 15 Pro Max">iPhone 15 Pro Max</option>
+          <option value="iPhone 16">iPhone 16</option>
+          <option value="iPhone 16 Plus">iPhone 16 Plus</option>
+          <option value="iPhone 16 Pro">iPhone 16 Pro</option>
+          <option value="iPhone 16 Pro Max">iPhone 16 Pro Max</option>
+          <option value="iPhone 17">iPhone 17</option>
+          <option value="iPhone 17 Pro">iPhone 17 Pro</option>
+          <option value="iPhone 17 Pro Max">iPhone 17 Pro Max</option>
+        </select>
+        <small id="modelError" class="text-error" style="display:none;">Vui lòng chọn dòng máy để tiếp tục!</small>
+      </div>
+
+      <!-- Buttons: Add to Cart + Buy Now -->
+      <div class="modal-btn-group dual-btns">
+        <button id="btnAddToCart" class="btn-primary btn-add-cart"><i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ hàng</button>
+        <button id="btnBuyNow" class="btn-primary btn-buy-now"><i class="fa-solid fa-bolt"></i> Mua Ngay</button>
+      </div>
+
+      <!-- Like & Comment Section -->
+      <div class="interaction-section" id="interactionSection">
+        <div class="like-bar">
+          <button class="btn-like" id="btnLikeProduct" onclick="toggleLike()">
+            <i class="fa-regular fa-heart" id="likeIcon"></i> <span id="likeText">Thích</span>
+          </button>
+          <span class="like-count" id="likeCount">0 lượt thích</span>
         </div>
-      </div>
-      <div class="modal-contact-info">
-        <p>📍 Địa chỉ: <strong>Mỹ Luông, An Giang</strong></p>
-        <p>📞 Liên hệ đặt hàng: <a href="tel:0988882700">0988 882 700</a></p>
-        <p>💬 Nhắn Zalo để được tư vấn nhanh nhất!</p>
-      </div>
-      <div class="modal-btn-group">
-        <a href="https://zalo.me/0988882700" target="_blank" class="btn-primary">💬 Nhắn Zalo Ngay</a>
-        <a href="tel:0988882700" class="btn-secondary">📞 Gọi Điện</a>
+        <div class="comments-section">
+          <h4>💬 Bình luận (<span id="commentCount">0</span>)</h4>
+          <div class="comments-list" id="commentsList"></div>
+          <div class="comment-input-area" id="commentInputArea">
+            <div class="comment-login-prompt" id="commentLoginPrompt">
+              <p>🔒 <a href="#" onclick="handleGoogleLogin(); return false;">Đăng nhập Google</a> để bình luận và thích sản phẩm</p>
+            </div>
+            <div class="comment-form" id="commentForm" style="display:none;">
+              <img id="commentAvatar" class="comment-user-avatar" src="" alt="">
+              <input type="text" id="commentInput" class="form-control" placeholder="Viết bình luận...">
+              <button class="btn-send-comment" onclick="postComment()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- Shopping Cart Sidebar -->
+  <div class="cart-sidebar-overlay" id="cartOverlay"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>Giỏ Hàng Của Bạn</h3>
+      <button class="close-cart" id="closeCartBtn">✕</button>
+    </div>
+    
+    <div class="cart-items" id="cartItemsContainer">
+      <!-- Cart items render here -->
+      <div class="empty-cart"><i class="fa-solid fa-cart-arrow-down" style="font-size: 3rem; margin-bottom: 10px; color: var(--primary-300);"></i><br>Giỏ hàng đang trống</div>
+    </div>
+    
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Tổng cộng:</span>
+        <span id="cartTotalPrice">0₫</span>
+      </div>
+      <button class="btn-checkout" id="btnOpenCheckout" style="display:none;">
+        <i class="fa-solid fa-paper-plane"></i> Tiến Hành Đặt Hàng
+      </button>
+    </div>
+  </div>
+
+  <!-- Checkout Modal (separate from cart) -->
+  <div class="modal-overlay" id="checkoutModalOverlay">
+    <div class="modal modal-checkout" id="checkoutModal">
+      <button class="modal-close" id="checkoutModalClose">✕</button>
+      <h3>📦 Thông tin giao hàng</h3>
+      <div class="checkout-summary" id="checkoutSummary"></div>
+      <form id="checkoutForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Họ và tên <span class="required">*</span></label>
+            <input type="text" id="custName" class="form-control" placeholder="Nhập họ và tên" required>
+          </div>
+          <div class="form-group">
+            <label>Số điện thoại <span class="required">*</span></label>
+            <input type="tel" id="custPhone" class="form-control" placeholder="VD: 0378791667" required pattern="[0-9]{10}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="custEmail" class="form-control" placeholder="Email (không bắt buộc)">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tỉnh / Thành phố <span class="required">*</span></label>
+            <select id="custProvince" class="form-control" required>
+              <option value="">-- Chọn Tỉnh/TP --</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Quận / Huyện <span class="required">*</span></label>
+            <select id="custDistrict" class="form-control" required>
+              <option value="">-- Chọn Quận/Huyện --</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Địa chỉ chi tiết <span class="required">*</span></label>
+          <input type="text" id="custAddress" class="form-control" placeholder="Số nhà, tên đường..." required>
+        </div>
+        <div class="form-group">
+          <label>Ghi chú</label>
+          <textarea id="custNote" class="form-control" placeholder="Ghi chú thêm (không bắt buộc)" rows="2"></textarea>
+        </div>
+        
+        <div class="checkout-notice">
+          <i class="fa-solid fa-box-open"></i>
+          <p>Đơn hàng <strong>Tiên House</strong> luôn được đóng gói cẩn thận. Tránh trường hợp đáng tiếc, Khách hàng vui lòng <strong>quay video khi bóc hàng</strong> để được hỗ trợ tốt nhất nếu Sản Phẩm xảy ra vấn đề.</p>
+        </div>
+
+        <button type="submit" class="btn-checkout" id="btnSubmitOrder">
+          <i class="fa-solid fa-paper-plane"></i> Xác Nhận Đặt Hàng
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div class="modal-overlay" id="successModalOverlay">
+    <div class="modal" style="text-align: center; padding: 40px 20px;">
+      <div style="font-size: 4rem; color: var(--primary-500); margin-bottom: 20px;"><i class="fa-solid fa-circle-check"></i></div>
+      <h3 style="margin-bottom: 15px;">Đặt hàng thành công!</h3>
+      <p style="margin-bottom: 25px; line-height: 1.6; font-size: 1.05rem;">Cảm ơn bạn đã đặt hàng tại <strong>Tiên House</strong>.<br>Thông tin đã được ghi nhận và chúng tôi sẽ sớm liên hệ để xác nhận đơn hàng.</p>
+      <button class="btn-primary" onclick="closeSuccessModal()" style="padding: 12px 30px; display: inline-block; width: auto; min-width: 150px;">Đóng</button>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <p>Đang xử lý đơn hàng...</p>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
