@@ -94,7 +94,7 @@ async function initApp() {
                 images: imgs,
                 category: finalCat,
                 requiresModel: requiresModel,
-                description: row.description || "Sản phẩm chất lượng từ Tiên House.",
+                description: row['Thông Tin Sản Phẩm'] || row.description || "Sản phẩm chất lượng từ Tiên House.",
                 stock: totalStock,
                 sold: sold
               };
