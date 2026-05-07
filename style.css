@@ -470,11 +470,12 @@ body {
 }
 .modal-close {
   position: absolute; top: 15px; right: 15px;
-  background: var(--gray-100); border: none;
-  width: 32px; height: 32px; border-radius: 50%;
-  font-size: 1rem; cursor: pointer;
-  color: var(--gray-600); transition: all 0.3s;
+  background: var(--gray-200); border: none;
+  width: 36px; height: 36px; border-radius: 50%;
+  font-size: 1.1rem; cursor: pointer;
+  color: var(--gray-800); transition: all 0.3s;
   display: flex; align-items: center; justify-content: center;
+  z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 .modal-close:hover { background: var(--primary-100); color: var(--primary-600); }
 .modal h3 {
