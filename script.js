@@ -315,7 +315,8 @@ function validateAndGetCartItem() {
     name: currentSelectedProduct.name, price: currentSelectedProduct.price,
     priceNum: currentSelectedProduct.priceNum, img: currentSelectedProduct.img,
     model: selectedModel, cartId: `${currentSelectedProduct.id}_${selectedModel}`,
-    quantity: 1, requiresModel: currentSelectedProduct.requiresModel
+    quantity: 1, requiresModel: currentSelectedProduct.requiresModel,
+    description: currentSelectedProduct.description
   };
 }
 
@@ -493,7 +494,7 @@ document.getElementById('checkoutForm').addEventListener('submit', function(e) {
   const totalMoney = cart.reduce((sum, item) => sum + (item.priceNum * item.quantity), 0);
   const itemsText = cart.map((item, i) => {
     const m = item.requiresModel ? ` | Model: ${item.model}` : '';
-    return `${i+1}. [${item.code}] ${item.name}${m} | SL: ${item.quantity} | Giá: ${formatCurrency(item.priceNum)}`;
+    return `${i+1}. [${item.code}] ${item.name}${m} | SL: ${item.quantity} | Giá: ${formatCurrency(item.priceNum)}\n   -> Chi tiết: ${item.description}`;
   }).join('\n');
 
   const orderData = {
