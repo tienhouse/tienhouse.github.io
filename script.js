@@ -614,37 +614,6 @@ function updateLoginUI() {
   }
 }
 
-// Khởi tạo Facebook SDK
-window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '1634423781107098', // Facebook App ID của TienHouse (App Mới)
-    cookie     : true,
-    xfbml      : true,
-    version    : 'v19.0'
-  });
-};
-
-function handleFacebookLogin() {
-  if (typeof FB === 'undefined') { alert('Facebook SDK đang tải, vui lòng thử lại sau giây lát!'); return; }
-  
-  FB.login(function(response) {
-    if (response.authResponse) {
-      FB.api('/me', {fields: 'name,picture.width(150).height(150)'}, function(res) {
-        currentUser = { 
-          name: res.name, 
-          email: '', 
-          picture: res.picture?.data?.url || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(res.name), 
-          sub: 'fb_' + res.id 
-        };
-        localStorage.setItem('tienhouse_user', JSON.stringify(currentUser));
-        updateLoginUI();
-        if (currentSelectedProduct) loadProductInteractions(currentSelectedProduct.id);
-      });
-    } else {
-      console.log('Người dùng đã hủy đăng nhập Facebook.');
-    }
-  }, {scope: 'public_profile'});
-}
 
 function handleGoogleLogin() {
   if (typeof google === 'undefined') { alert('Google Sign-In đang tải, vui lòng thử lại!'); return; }

@@ -13,8 +13,6 @@
 <body>
   <!-- Google Identity Services -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <!-- Facebook SDK -->
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js"></script>
 
 
   <!-- Floating Hearts Background -->
@@ -37,11 +35,8 @@
           <i class="fa-solid fa-shopping-cart"></i> Giỏ hàng <span class="cart-count badge" id="headerCartCount">0</span>
         </button>
         <div id="loginButtonsContainer" class="login-buttons-wrapper">
-          <button class="google-login-btn" onclick="handleGoogleLogin()" title="Đăng nhập Google">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G" width="18">
-          </button>
-          <button class="facebook-login-btn" onclick="handleFacebookLogin()" title="Đăng nhập Facebook">
-            <i class="fa-brands fa-facebook-f" style="color: white; font-size: 16px;"></i>
+          <button class="google-login-btn" onclick="handleGoogleLogin()" title="Đăng nhập bằng Google">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G" width="18"> Đăng nhập
           </button>
         </div>
         <div class="user-avatar-wrapper" id="userAvatarWrapper" style="display:none;">
@@ -278,7 +273,7 @@
           <div class="comments-list" id="commentsList"></div>
           <div class="comment-input-area" id="commentInputArea">
             <div class="comment-login-prompt" id="commentLoginPrompt">
-              <p>🔒 Đăng nhập <a href="#" onclick="handleGoogleLogin(); return false;">Google</a> hoặc <a href="#" onclick="handleFacebookLogin(); return false;">Facebook</a> để bình luận</p>
+              <p>🔒 Vui lòng <a href="#" onclick="handleGoogleLogin(); return false;">Đăng nhập Google</a> để bình luận</p>
             </div>
             <div class="comment-form" id="commentForm" style="display:none;">
               <img id="commentAvatar" class="comment-user-avatar" src="" alt="">
