@@ -596,10 +596,10 @@ let currentLikesRef = null;
 let currentCommentsRef = null;
 
 function updateLoginUI() {
-  const loginBtn = document.getElementById('googleLoginBtn');
+  const loginWrapper = document.getElementById('loginButtonsContainer');
   const avatarWrapper = document.getElementById('userAvatarWrapper');
   if (currentUser) {
-    loginBtn.style.display = 'none';
+    if (loginWrapper) loginWrapper.style.display = 'none';
     avatarWrapper.style.display = 'flex';
     document.getElementById('userAvatar').src = currentUser.picture;
     document.getElementById('userDisplayName').textContent = currentUser.name.split(' ')[0];
@@ -607,11 +607,43 @@ function updateLoginUI() {
     document.getElementById('commentForm').style.display = 'flex';
     document.getElementById('commentAvatar').src = currentUser.picture;
   } else {
-    loginBtn.style.display = 'flex';
+    if (loginWrapper) loginWrapper.style.display = 'flex';
     avatarWrapper.style.display = 'none';
     document.getElementById('commentLoginPrompt').style.display = 'block';
     document.getElementById('commentForm').style.display = 'none';
   }
+}
+
+// Khởi tạo Facebook SDK
+window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '968725206028342', // Facebook App ID của TienHouse
+    cookie     : true,
+    xfbml      : true,
+    version    : 'v19.0'
+  });
+};
+
+function handleFacebookLogin() {
+  if (typeof FB === 'undefined') { alert('Facebook SDK đang tải, vui lòng thử lại sau giây lát!'); return; }
+  
+  FB.login(function(response) {
+    if (response.authResponse) {
+      FB.api('/me', {fields: 'name,picture.width(150).height(150)'}, function(res) {
+        currentUser = { 
+          name: res.name, 
+          email: '', 
+          picture: res.picture?.data?.url || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(res.name), 
+          sub: 'fb_' + res.id 
+        };
+        localStorage.setItem('tienhouse_user', JSON.stringify(currentUser));
+        updateLoginUI();
+        if (currentSelectedProduct) loadProductInteractions(currentSelectedProduct.id);
+      });
+    } else {
+      console.log('Người dùng đã hủy đăng nhập Facebook.');
+    }
+  }, {scope: 'public_profile'});
 }
 
 function handleGoogleLogin() {
